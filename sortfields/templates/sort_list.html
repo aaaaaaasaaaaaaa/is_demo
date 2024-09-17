@@ -1,0 +1,22 @@
+{% extends "base_app.html" %}
+
+{% block title %}
+    Сортировка значений списочного поля
+{% endblock %}
+
+{% block header %}
+    <div class="header">
+        <h1>Сортировка значений списочного поля</h1>
+        <button onclick="">Назад</button>
+    </div>
+{% endblock %}
+
+{% block content %}
+    {% if count %}
+        <p>Сортироавано значений: {{ count }}</p>
+    {% endif %}
+    <form action="{% url 'sort_fields'%}" method="post">
+        <button class="c-button" type="submit">Сортировать</button>
+    </form>
+    <p>{{ result }}</p>
+{% endblock %}
