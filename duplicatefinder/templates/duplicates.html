@@ -1,0 +1,47 @@
+{% extends "base_app.html" %}
+
+{% block title %}
+    Найдены следующие дубликаты товаров на портале
+{% endblock %}
+
+{% block header %}
+    {% if res %}
+        <div class="header">
+            <h1>Найдены следующие дубликаты товаров на портале:</h1>
+            <button onclick="document.location='{% url 'find_duplicates'%}'">Назад</button>
+        </div>
+    {% else %}
+        <div class="header">
+            <h1>Найти дубликаты товаров на портале:</h1>
+            <button onclick="document.location='{% url 'reload_start'%}'">Назад</button>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if res %}
+        <div>
+            <table>
+              <tr>
+                <th>{{ title }}</th>
+                <th>Количество дубликатов</th>
+              </tr>
+              {% for name, count in res.items %}
+              <tr>
+                <td>{{ name }}</td>
+                <td>{{ count }}</td>
+              </tr>
+              {% endfor %}
+            </table>
+        </div>
+    {% else %}
+        <form action="{% url 'find_duplicates' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit", value="Найти">
+        </form>
+        {% if check %}
+        <p>{{ check }}</p>
+        {% endif %}
+    {% endif %}
+{% endblock %}
