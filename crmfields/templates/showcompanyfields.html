@@ -1,0 +1,56 @@
+{% extends "base_app.html" %}
+
+
+
+{% block title %}
+    Список сущности "Компании"
+{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://unpkg.com/ag-grid-enterprise/dist/ag-grid-enterprise.min.js"></script>
+{% endblock %}
+{% block header %}
+    <div class="header">
+        <h1>Список сущности "Компании"</h1>
+        <button onclick="document.location='{% url 'reload_start'%}'">Назад</button>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div id="myGrid" style="height: 600px; width:100%;" class="ag-theme-alpine"></div>
+    <script>
+    all_companies = {{ all_companies|safe }};
+    let gridOptions = {
+        defaultColDef: {
+            //editable: true,
+            floatingFilter: true,
+            resizable: true,
+            sortable: true,
+            filter: true,
+            autoHeight: true,
+        },
+        columnDefs: [
+            {headerName: "ID", field: "ID"},
+            {headerName: "Проект", field: "TITLE"},
+            {headerName: "Дата создания", field: "DATE"},
+            {headerName: "Адрес", field: "ADDRESS"},
+            {headerName: "Город", field: "ADDRESS_CITY"},
+
+            {#{headerName: "Model", field: "model"},#}
+            {#{headerName: "Price", field: "price"}#}
+        ],
+        rowData: all_companies,
+        sideBar: true,
+        //groupMultiAutoColumn: true,
+
+    };
+
+
+    // setup the grid after the page has finished loading
+    document.addEventListener('DOMContentLoaded', function () {
+        var gridDiv = document.querySelector('#myGrid');
+        new agGrid.Grid(gridDiv, gridOptions);
+    });
+</script>
+{% endblock %}
