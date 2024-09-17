@@ -1,0 +1,22 @@
+{% extends "base_app.html" %}
+
+{% block title %}
+    Отображение компаний в БД
+{% endblock %}
+
+{% block header %}
+    <div class="header">
+        <h1>Отображение компаний в БД</h1>
+        <button onclick="document.location='{% url 'reload_start'%}'">Назад</button>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        <p><input type="submit" value="Обновить"></p>
+    </form>
+    {% if comment %}
+        <p>{{ comment }}</p>
+    {% endif %}
+{% endblock %}
+<script src="//api.bitrix24.com/api/v1/"></script>
